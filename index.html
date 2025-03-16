@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>소설 포맷터</title>
+  <title>포맷터</title>
   <style>
     :root {
+      /* 소설 테마 기본값 */
       --primary-bg: #f3eadb;
       --text-color: #3a2a12;
       --border-color: #d5c7af;
@@ -39,6 +40,28 @@
       text-align: center;
       color: #333;
       margin-bottom: 30px;
+    }
+
+    .theme-selector {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .theme-btn {
+      padding: 10px 20px;
+      margin: 0 10px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      background-color: #f8f8f8;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+
+    .theme-btn.active {
+      background-color: #4a6da7;
+      color: white;
+      border-color: #3a5a8c;
     }
 
     .controls-panel {
@@ -309,32 +332,45 @@
     .copy-button:hover {
       background-color: #5a6268;
     }
+
+    /* 해커 테마 관련 스타일 */
+    .theme-control-panel {
+      display: none;
+    }
+
+    .theme-control-panel.active {
+      display: block;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>소설 포맷터</h1>
+    <h1>포맷터</h1>
     
-    <div class="controls-panel">
-      <div class="content-controls">
-        <div class="input-group">
-          <label for="character-name">캐릭터 이름</label>
-          <input type="text" id="character-name" placeholder="캐릭터 이름을 입력하세요">
-        </div>
-        
-        <div class="input-group">
-          <label for="page-number">페이지 번호</label>
-          <input type="text" id="page-number" placeholder="페이지 번호를 입력하세요">
-        </div>
-        
-        <div class="input-group">
-          <label for="cover-image">표지 이미지 URL</label>
-          <input type="text" id="cover-image" placeholder="이미지 URL을 입력하세요" value="//ac.namu.la/20250311sac/fc1dd8bef3eb8b4e1958af4431402bc9fb4ffca399670932db875a049916e3f0.jpg">
-        </div>
-        
-        <div class="input-group">
-          <label for="novel-content">소설 내용</label>
-          <textarea id="novel-content" placeholder="소설 내용을 입력하세요">빛이 스며드는 오후, 창가에 앉은 소년은 창밖의 풍경을 바라보며 깊은 생각에 잠겼다. 햇살이 그의 얼굴을 비추자, 그는 문득 옆에 앉은 소녀를 향해 시선을 돌렸다. 소녀는 그의 눈빛을 읽어내듯 미소를 지었다.
+    <div class="theme-selector">
+      <button class="theme-btn active" data-theme="novel">소설 테마</button>
+      <button class="theme-btn" data-theme="hacker">해커 테마</button>
+    </div>
+    
+    <!-- 소설 테마 컨트롤 패널 -->
+    <div id="novel-controls" class="theme-control-panel active">
+      <div class="controls-panel">
+        <div class="content-controls">
+          <div class="input-group">
+            <label for="character-name">캐릭터 이름</label>
+            <input type="text" id="character-name" placeholder="캐릭터 이름을 입력하세요">
+          </div>
+          <div class="input-group">
+            <label for="page-number">페이지 번호</label>
+            <input type="text" id="page-number" placeholder="페이지 번호를 입력하세요">
+          </div>
+          <div class="input-group">
+            <label for="cover-image">표지 이미지 URL</label>
+            <input type="text" id="cover-image" placeholder="이미지 URL을 입력하세요" value="//ac.namu.la/20250311sac/fc1dd8bef3eb8b4e1958af4431402bc9fb4ffca399670932db875a049916e3f0.jpg">
+          </div>
+          <div class="input-group">
+            <label for="novel-content">소설 내용</label>
+            <textarea id="novel-content" placeholder="소설 내용을 입력하세요">빛이 스며드는 오후, 창가에 앉은 소년은 창밖의 풍경을 바라보며 깊은 생각에 잠겼다. 햇살이 그의 얼굴을 비추자, 그는 문득 옆에 앉은 소녀를 향해 시선을 돌렸다. 소녀는 그의 눈빛을 읽어내듯 미소를 지었다.
 
 "스이쨩... 상냥해..."
 
@@ -343,77 +379,112 @@
 "시끄러워! 맘 바뀌기 전에 먹어!"
 
 소녀의 투박한 말과는 달리, 그녀가 건넨 도시락은 정성스럽게 준비된 것이었다. 소년은 그 모습에 살며시 웃음을 지었다. 그는 소녀의 진심이 담긴 음식을 천천히 맛보기 시작했다.</textarea>
+          </div>
+        </div>
+        <div class="style-controls">
+          <div class="input-group">
+            <label for="font-family">폰트</label>
+            <select id="font-family">
+              <option value="'Noto Serif KR', serif">Noto Serif KR</option>
+              <option value="'Nanum Myeongjo', serif">나눔명조</option>
+              <option value="'KoPub Batang', serif">KoPub 바탕</option>
+              <option value="'Nanum Gothic', sans-serif">나눔고딕</option>
+              <option value="'Gowun Batang', serif">고운바탕</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="bg-color">배경 색상</label>
+            <div class="color-input">
+              <input type="color" id="bg-color" value="#f3eadb">
+              <input type="text" id="bg-color-text" value="#f3eadb">
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="text-color">텍스트 색상</label>
+            <div class="color-input">
+              <input type="color" id="text-color" value="#3a2a12">
+              <input type="text" id="text-color-text" value="#3a2a12">
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="border-color">테두리 색상</label>
+            <div class="color-input">
+              <input type="color" id="border-color" value="#d5c7af">
+              <input type="text" id="border-color-text" value="#d5c7af">
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="font-size">폰트 크기 (px)</label>
+            <div class="slider-container">
+              <input type="range" id="font-size" min="12" max="24" value="17">
+              <span id="font-size-value" class="slider-value">17px</span>
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="line-height">행간 (줄 간격)</label>
+            <div class="slider-container">
+              <input type="range" id="line-height" min="1.2" max="2.5" step="0.1" value="1.8">
+              <span id="line-height-value" class="slider-value">1.8</span>
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="letter-spacing">자간 (글자 간격 px)</label>
+            <div class="slider-container">
+              <input type="range" id="letter-spacing" min="0" max="2" step="0.1" value="0.2">
+              <span id="letter-spacing-value" class="slider-value">0.2px</span>
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="paper-texture">종이 질감 적용</label>
+            <input type="checkbox" id="paper-texture" checked>
+          </div>
+          <div class="buttons">
+            <button id="novel-preview-button">미리보기</button>
+          </div>
         </div>
       </div>
-      
-      <div class="style-controls">
-        <div class="input-group">
-          <label for="font-family">폰트</label>
-          <select id="font-family">
-            <option value="'Noto Serif KR', serif">Noto Serif KR</option>
-            <option value="'Nanum Myeongjo', serif">나눔명조</option>
-            <option value="'KoPub Batang', serif">KoPub 바탕</option>
-            <option value="'Nanum Gothic', sans-serif">나눔고딕</option>
-            <option value="'Gowun Batang', serif">고운바탕</option>
-          </select>
-        </div>
-        
-        <div class="input-group">
-          <label for="bg-color">배경 색상</label>
-          <div class="color-input">
-            <input type="color" id="bg-color" value="#f3eadb">
-            <input type="text" id="bg-color-text" value="#f3eadb">
+    </div>
+    
+    <!-- 해커 테마 컨트롤 패널 -->
+    <div id="hacker-controls" class="theme-control-panel">
+      <div class="controls-panel">
+        <div class="content-controls">
+          <div class="input-group">
+            <label for="subject-code">SUBJECT 코드</label>
+            <input type="text" id="subject-code" placeholder="예: 042" value="042">
+          </div>
+          <div class="input-group">
+            <label for="nickname">특징 (영어로)</label>
+            <input type="text" id="nickname" placeholder='예: "The Observer"' value="The Observer">
+          </div>
+          <div class="input-group">
+            <label for="subject-image">프로필 이미지 URL</label>
+            <input type="text" id="subject-image" placeholder="이미지 URL을 입력하세요">
+          </div>
+          <div class="input-group">
+            <label for="real-name">실명</label>
+            <input type="text" id="real-name" placeholder="실명을 입력하세요" value="[REDACTED]">
+          </div>
+          <div class="input-group">
+            <label for="age">나이</label>
+            <input type="text" id="age" placeholder="나이를 입력하세요" value="Unknown">
+          </div>
+          <div class="input-group">
+            <label for="location">위치</label>
+            <input type="text" id="location" placeholder="마지막 위치를 입력하세요" value="Last seen: Station 16">
+          </div>
+          <div class="input-group">
+            <label for="status">상태</label>
+            <input type="text" id="status" placeholder="상태를 입력하세요" value="Monitoring">
+          </div>
+          <div class="input-group">
+            <label for="log-content">로그 내용</label>
+            <textarea id="log-content" placeholder="로그 내용을 입력하세요">(여기에 로그 입력)</textarea>
           </div>
         </div>
-        
-        <div class="input-group">
-          <label for="text-color">텍스트 색상</label>
-          <div class="color-input">
-            <input type="color" id="text-color" value="#3a2a12">
-            <input type="text" id="text-color-text" value="#3a2a12">
-          </div>
-        </div>
-        
-        <div class="input-group">
-          <label for="border-color">테두리 색상</label>
-          <div class="color-input">
-            <input type="color" id="border-color" value="#d5c7af">
-            <input type="text" id="border-color-text" value="#d5c7af">
-          </div>
-        </div>
-        
-        <div class="input-group">
-          <label for="font-size">폰트 크기 (px)</label>
-          <div class="slider-container">
-            <input type="range" id="font-size" min="12" max="24" value="17">
-            <span id="font-size-value" class="slider-value">17px</span>
-          </div>
-        </div>
-        
-        <div class="input-group">
-          <label for="line-height">행간 (줄 간격)</label>
-          <div class="slider-container">
-            <input type="range" id="line-height" min="1.2" max="2.5" step="0.1" value="1.8">
-            <span id="line-height-value" class="slider-value">1.8</span>
-          </div>
-        </div>
-        
-        <div class="input-group">
-          <label for="letter-spacing">자간 (글자 간격 px)</label>
-          <div class="slider-container">
-            <input type="range" id="letter-spacing" min="0" max="2" step="0.1" value="0.2">
-            <span id="letter-spacing-value" class="slider-value">0.2px</span>
-          </div>
-        </div>
-        
-        <div class="input-group">
-          <label for="paper-texture">종이 질감 적용</label>
-          <input type="checkbox" id="paper-texture" checked>
-        </div>
-        
-        <div class="buttons">
-          <button id="preview-button">미리보기</button>
-        </div>
+      </div>
+      <div class="buttons" style="text-align: center;">
+        <button id="hacker-preview-button">미리보기</button>
       </div>
     </div>
     
@@ -424,20 +495,18 @@
       </div>
       
       <div id="preview-tab" class="tab-content active">
-        <div id="book-preview" class="book-container pattern-bg">
+        <!-- 소설 테마 미리보기 -->
+        <div id="novel-preview" class="book-container pattern-bg">
           <div class="folded-corner"></div>
-          
           <div class="book-header">
             <div class="book-cover">
               <img id="preview-cover" src="//ac.namu.la/20250311sac/fc1dd8bef3eb8b4e1958af4431402bc9fb4ffca399670932db875a049916e3f0.jpg" alt="책 표지">
             </div>
-            
             <div class="book-title">
               <span id="preview-title">캐릭터 이름</span>
               <div class="title-underline"></div>
             </div>
           </div>
-          
           <div id="preview-content" class="book-content">
             <p>빛이 스며드는 오후, 창가에 앉은 소년은 창밖의 풍경을 바라보며 깊은 생각에 잠겼다. 햇살이 그의 얼굴을 비추자, 그는 문득 옆에 앉은 소녀를 향해 시선을 돌렸다. 소녀는 그의 눈빛을 읽어내듯 미소를 지었다.</p>
             <p>"스이쨩... 상냥해..."</p>
@@ -445,7 +514,6 @@
             <p>"시끄러워! 맘 바뀌기 전에 먹어!"</p>
             <p>소녀의 투박한 말과는 달리, 그녀가 건넨 도시락은 정성스럽게 준비된 것이었다. 소년은 그 모습에 살며시 웃음을 지었다. 그는 소녀의 진심이 담긴 음식을 천천히 맛보기 시작했다.</p>
           </div>
-          
           <div class="book-footer">
             <span class="page-number">
               <div class="page-line-left"></div>
@@ -455,225 +523,88 @@
           </div>
         </div>
         
-        <button id="export-button" class="export-button">HTML 코드 내보내기</button>
+        <!-- 해커 테마 미리보기 -->
+        <div id="hacker-preview" style="display: none;">
+          <div style="width:100%;max-width:700px;margin:0 auto;background-color:#000e1a;color:#cccccc;font-family:'Courier New', monospace;border-radius:6px;box-shadow:0 5px 15px rgba(0,0,0,0.5);border:1px solid #003366;">
+            <div style="background-color:#001122;padding:15px;border-bottom:1px solid #003366;">
+              <div style="float:left;color:#00ccff;font-size:22px;letter-spacing:2px;font-weight:bold;">ECHO::archive</div>
+              <div style="float:right;background-color:#002244;padding:5px 10px;border-radius:3px;font-size:14px;color:#999999;">ACCESSED: 03.16.25</div>
+              <div style="clear:both;"><br></div>
+            </div>
+            <div style="background-color:#002244;padding:8px;border-bottom:1px solid #003366;text-align:center;">
+              <span style="display:inline-block;background-color:#001122;color:#00ccff;padding:5px 10px;font-size:14px;border-radius:3px;border:1px solid #00ccff;margin:3px;">HOME</span>
+              <span style="display:inline-block;background-color:#00ccff;color:#001122;padding:5px 10px;font-size:14px;border-radius:3px;margin:3px;">PROFILES</span>
+              <span style="display:inline-block;background-color:#001122;color:#00ccff;padding:5px 10px;font-size:14px;border-radius:3px;border:1px solid #00ccff;margin:3px;">DATABASE</span>
+              <span style="display:inline-block;background-color:#001122;color:#00ccff;padding:5px 10px;font-size:14px;border-radius:3px;border:1px solid #00ccff;margin:3px;">LOGS</span>
+            </div>
+            <div style="background-color:#001122;padding:8px;border-bottom:1px solid #003366;">
+              <div style="display:flex;">
+                <div style="color:#999999;font-size:14px;padding:5px;">search://</div>
+                <div style="margin-right:5px;">
+                  <div id="hacker-link" style="color:#00ccff;font-size:14px;background-color:#002244;padding:5px 10px;border-radius:3px;text-overflow:ellipsis;">echo-archive.net/profiles/subject_042</div>
+                </div>
+                <div style="background-color:#00ccff;color:#001122;padding:5px 8px;font-size:14px;border-radius:3px;min-width:40px;text-align:center;">FIND</div>
+              </div>
+            </div>
+            <div style="padding:15px;border-bottom:1px solid #003366;background-color:#000e1a;">
+              <div style="margin-bottom:15px;">
+                <div style="float:left;width:3px;height:20px;background-color:#00ccff;margin-right:10px;"></div>
+                <div style="color:#00ccff;font-size:18px;letter-spacing:1px;">SUBJECT FILE</div>
+              </div>
+              <div style="border:1px solid #003366;background-color:#00111e;padding:15px;">
+                <div style="text-align:center;margin-bottom:20px;">
+                  <div style="margin:0 auto;width:150px;height:225px;border:1px solid #00ccff;background-color:#002244;padding:3px;margin-bottom:15px;">
+                    <img id="hacker-image" style="width: 100%; height: 100%;" src="//placehold.it/150x225" alt="프로필 이미지">
+                  </div>
+                  <div id="hacker-subject" style="color:#ffffff;font-size:26px;font-weight:bold;margin-bottom:5px;">SUBJECT_042</div>
+                  <div id="hacker-nickname" style="color:#00ccff;font-size:16px;font-style:italic;margin-bottom:20px;">"The Observer"</div>
+                </div>
+                <div style="border-top:1px solid #002244;padding-top:8px;padding-bottom:8px;">
+                  <div style="float:left;min-width:100px;color:#999999;">실명:</div>
+                  <div id="hacker-realname" style="color:#ffffff;">[REDACTED]</div>
+                </div>
+                <div style="border-top:1px solid #002244;padding-top:8px;padding-bottom:8px;">
+                  <div style="float:left;min-width:100px;color:#999999;">나이:</div>
+                  <div id="hacker-age" style="color:#ffffff;">Unknown</div>
+                </div>
+                <div style="border-top:1px solid #002244;padding-top:8px;padding-bottom:8px;">
+                  <div style="float:left;min-width:100px;color:#999999;">위치:</div>
+                  <div id="hacker-location" style="color:#ffffff;">Last seen: Station 16</div>
+                </div>
+                <div style="border-top:1px solid #002244;padding-top:8px;padding-bottom:8px;">
+                  <div style="float:left;min-width:100px;color:#999999;">상태:</div>
+                  <div id="hacker-status" style="color:#ff6666;font-weight:bold;">Monitoring</div>
+                </div>
+              </div>
+              <div style="background-color:#001122;color:#00ff66;padding:15px;font-family:'Courier New', monospace;font-size:14px;line-height:1.6;margin-top:15px;border:1px solid #003366;">
+                <div>> Access Code: ************</div>
+                <div>> Last Sighting: Abandoned Station #16</div>
+                <div>> Note: Subject carries distinctive blue bag</div>
+                <div>> Warning: Approach with caution</div>
+              </div>
+            </div>
+            <div style="padding:15px;border-bottom:1px solid #003366;background-color:#000e1a;">
+              <div style="margin-bottom:15px;">
+                <div style="float:left;width:3px;height:20px;background-color:#00ccff;margin-right:10px;"></div>
+                <div style="color:#00ccff;font-size:18px;letter-spacing:1px;">LOG ENTRY</div>
+              </div>
+              <div id="hacker-log" style="background-color:#002244;color:#cccccc;padding:20px;font-family:'Courier New', monospace;font-size:14px;line-height:1.7;border:1px solid #003366;">
+                <p style="margin-bottom:15px;">(여기에 로그 입력)</p>
+              </div>
+            </div>
+            <div style="background-color:#002244;padding:10px;border-bottom:1px solid #003366;text-align:center;">
+              <span style="display:inline-block;color:#00ccff;font-size:14px;text-decoration:underline;margin:5px 10px;">Previous File</span>
+              <span style="display:inline-block;color:#00ccff;font-size:14px;text-decoration:underline;margin:5px 10px;">Next File</span>
+            </div>
+          </div>
+        </div>
       </div>
       
-      <div id="code-tab" class="tab-content">
-        <div class="code-area" id="html-code-output"></div>
-        <button id="copy-button" class="copy-button">코드 복사하기</button>
+      <div id="html-code-tab" class="tab-content">
+        <div class="code-area" id="html-code-area"></div>
+        <button class="copy-button">코드 복사</button>
       </div>
     </div>
   </div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // 요소 참조
-      const characterNameInput = document.getElementById('character-name');
-      const pageNumberInput = document.getElementById('page-number');
-      const coverImageInput = document.getElementById('cover-image');
-      const novelContentInput = document.getElementById('novel-content');
-      const fontFamilySelect = document.getElementById('font-family');
-      const bgColorInput = document.getElementById('bg-color');
-      const bgColorTextInput = document.getElementById('bg-color-text');
-      const textColorInput = document.getElementById('text-color');
-      const textColorTextInput = document.getElementById('text-color-text');
-      const borderColorInput = document.getElementById('border-color');
-      const borderColorTextInput = document.getElementById('border-color-text');
-      const fontSizeInput = document.getElementById('font-size');
-      const fontSizeValue = document.getElementById('font-size-value');
-      const lineHeightInput = document.getElementById('line-height');
-      const lineHeightValue = document.getElementById('line-height-value');
-      const letterSpacingInput = document.getElementById('letter-spacing');
-      const letterSpacingValue = document.getElementById('letter-spacing-value');
-      const paperTextureCheckbox = document.getElementById('paper-texture');
-      const previewButton = document.getElementById('preview-button');
-      const exportButton = document.getElementById('export-button');
-      const copyButton = document.getElementById('copy-button');
-      const tabButtons = document.querySelectorAll('.tab-button');
-      const tabContents = document.querySelectorAll('.tab-content');
-      
-      // 미리보기 요소
-      const bookPreview = document.getElementById('book-preview');
-      const previewCover = document.getElementById('preview-cover');
-      const previewTitle = document.getElementById('preview-title');
-      const previewContent = document.getElementById('preview-content');
-      const previewPage = document.getElementById('preview-page');
-      const htmlCodeOutput = document.getElementById('html-code-output');
-      
-      // 색상 입력 동기화
-      function syncColorInputs(colorInput, textInput) {
-        colorInput.addEventListener('input', function() {
-          textInput.value = this.value;
-          updatePreview();
-        });
-        
-        textInput.addEventListener('input', function() {
-          if (/^#[0-9A-Fa-f]{6}$/.test(this.value)) {
-            colorInput.value = this.value;
-            updatePreview();
-          }
-        });
-      }
-      
-      syncColorInputs(bgColorInput, bgColorTextInput);
-      syncColorInputs(textColorInput, textColorTextInput);
-      syncColorInputs(borderColorInput, borderColorTextInput);
-      
-      // 슬라이더 값 업데이트
-      fontSizeInput.addEventListener('input', function() {
-        fontSizeValue.textContent = this.value + 'px';
-        updatePreview();
-      });
-      
-      lineHeightInput.addEventListener('input', function() {
-        lineHeightValue.textContent = this.value;
-        updatePreview();
-      });
-      
-      letterSpacingInput.addEventListener('input', function() {
-        letterSpacingValue.textContent = this.value + 'px';
-        updatePreview();
-      });
-      
-      // 체크박스 이벤트
-      paperTextureCheckbox.addEventListener('change', updatePreview);
-      
-      // 폰트 변경 이벤트
-      fontFamilySelect.addEventListener('change', updatePreview);
-      
-      // 탭 전환
-      tabButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          const tabName = this.getAttribute('data-tab');
-          
-          // 모든 탭 버튼 비활성화
-          tabButtons.forEach(btn => btn.classList.remove('active'));
-          // 현재 탭 버튼 활성화
-          this.classList.add('active');
-          
-          // 모든 탭 컨텐츠 숨기기
-          tabContents.forEach(content => content.classList.remove('active'));
-          
-          // 현재 탭 컨텐츠 보이기
-          if (tabName === 'preview') {
-            document.getElementById('preview-tab').classList.add('active');
-          } else if (tabName === 'html-code') {
-            document.getElementById('code-tab').classList.add('active');
-            generateHTMLCode();
-          }
-        });
-      });
-      
-      // 미리보기 업데이트
-      function updatePreview() {
-        // 텍스트 업데이트
-        previewTitle.textContent = characterNameInput.value || '캐릭터 이름';
-        previewPage.textContent = pageNumberInput.value || '1';
-        
-        // 이미지 업데이트
-        if (coverImageInput.value) {
-          previewCover.src = coverImageInput.value;
-        }
-        
-        // 소설 내용 업데이트
-        const content = novelContentInput.value;
-        if (content) {
-          // 문단으로 분리하여 각각 <p> 태그로 감싸기
-          const paragraphs = content.split('\n\n').filter(p => p.trim() !== '');
-          previewContent.innerHTML = paragraphs.map(p => `<p>${p}</p>`).join('');
-        }
-        
-        // 스타일 업데이트
-        document.documentElement.style.setProperty('--primary-bg', bgColorInput.value);
-        document.documentElement.style.setProperty('--text-color', textColorInput.value);
-        document.documentElement.style.setProperty('--border-color', borderColorInput.value);
-        document.documentElement.style.setProperty('--font-family', fontFamilySelect.value);
-        document.documentElement.style.setProperty('--font-size', fontSizeInput.value + 'px');
-        document.documentElement.style.setProperty('--line-height', lineHeightInput.value);
-        document.documentElement.style.setProperty('--letter-spacing', letterSpacingInput.value + 'px');
-        
-        // 종이 질감 적용 여부
-        if (paperTextureCheckbox.checked) {
-          bookPreview.classList.add('pattern-bg');
-        } else {
-          bookPreview.classList.remove('pattern-bg');
-        }
-      }
-      
-      // HTML 코드 생성
-      function generateHTMLCode() {
-        const paperTexture = paperTextureCheckbox.checked ? 
-          `background-image:url('https://ac-p1.namu.la/20250315sac/1218e163e9bdfc24b7b15af40ec997a01443712000a3c7b895a9e9a0311e1d53.png');background-blend-mode:multiply;` : '';
-        
-        const content = novelContentInput.value;
-        const paragraphs = content.split('\n\n').filter(p => p.trim() !== '');
-        const contentHTML = paragraphs.map(p => `\t\t<p style="margin-bottom:1.2em;text-indent:1.5em;">${p}</p>`).join('\n');
-        
-        const htmlCode = `<div style="display:block;width:100%;max-width:700px;margin:0 auto;border-radius:12px;box-shadow:0 15px 30px rgba(0,0,0,0.4);background-color:${bgColorInput.value};color:${textColorInput.value};font-family:${fontFamilySelect.value};box-sizing:border-box;border:1px solid ${borderColorInput.value};overflow:hidden;${paperTexture}">
-	<!-- 접힌 페이지 코너 효과 -->
-	<div style="width:40px;height:40px;background:linear-gradient(135deg, transparent 48%, ${borderColorInput.value} 50%);">
-	</div>
-	
-	<!-- 헤더 영역 - 제목과 작가 정보 -->
-	<div style="display:flex;padding:22px;background:linear-gradient(to right, rgba(243,234,219,0.95), rgba(233,224,209,0.95));border-bottom:1px solid ${borderColorInput.value};align-items:center;">
-		<!-- 책 표지 이미지 -->
-		<div style="width:84px;height:84px;min-width:84px;border-radius:8px;background-color:#f8f5f0;margin-right:20px;box-shadow:0 4px 10px rgba(0,0,0,0.1), inset 0 0 0 1px rgba(0,0,0,0.05);border:1px solid ${borderColorInput.value};display:flex;justify-content:center;align-items:center;overflow:hidden;position:relative;">
-			<img style="width:100%;height:100%;object-fit:cover;" src="${coverImageInput.value}" alt="책 표지 이미지">
-		</div>
-		
-		<!-- 제목 영역 -->
-		<div style="font-size:24px;font-weight:bold;color:${textColorInput.value};letter-spacing:0.5px;text-shadow:0 1px 1px rgba(255,255,255,0.8);">
-			<span style="display:inline-block;">${characterNameInput.value || '캐릭터 이름'}&nbsp;
-				<div style="width:100%;height:1px;background:linear-gradient(to right, ${borderColorInput.value}, transparent);margin-top:6px;">
-				</div>
-			</span>
-		</div>
-	</div>
-	
-	<!-- 본문 영역 - 소설 형식 -->
-	<div style="display:block;padding:28px 35px;color:${textColorInput.value};line-height:${lineHeightInput.value};font-size:${fontSizeInput.value}px;font-weight:400;letter-spacing:${letterSpacingInput.value}px;word-spacing:0.5px;min-height:180px;background:rgba(243,234,219,0.92);position:relative;text-align:justify;">
-${contentHTML}
-	</div>
-	
-	<!-- 푸터 영역 - 페이지 번호 -->
-	<div style="text-align:center;font-size:14px;color:#7a6e58;padding:15px;font-style:italic;border-top:1px solid ${borderColorInput.value};background:linear-gradient(to right, rgba(243,234,219,0.95), rgba(233,224,209,0.95));">
-		<span style="display:inline-block;position:relative;padding:0 20px;">
-			&nbsp; - ${pageNumberInput.value || '1'} - &nbsp;
-			<div style="position:absolute;width:40px;height:1px;background:${borderColorInput.value};top:50%;left:-20px;"></div>
-			<div style="position:absolute;width:40px;height:1px;background:${borderColorInput.value};top:50%;right:-20px;"></div>
-		</span>
-	</div>
-</div>`;
-        
-        htmlCodeOutput.textContent = htmlCode;
-      }
-      
-      // 코드 복사 버튼
-      copyButton.addEventListener('click', function() {
-        const codeText = htmlCodeOutput.textContent;
-        navigator.clipboard.writeText(codeText).then(function() {
-          copyButton.textContent = '복사 완료!';
-          setTimeout(function() {
-            copyButton.textContent = '코드 복사하기';
-          }, 2000);
-        });
-      });
-      
-      // 내보내기 버튼
-      exportButton.addEventListener('click', function() {
-        generateHTMLCode();
-        tabButtons.forEach(btn => btn.classList.remove('active'));
-        tabContents.forEach(content => content.classList.remove('active'));
-        document.querySelector('[data-tab="html-code"]').classList.add('active');
-        document.getElementById('code-tab').classList.add('active');
-      });
-      
-      // 미리보기 버튼
-      previewButton.addEventListener('click', updatePreview);
-      
-      // 초기 미리보기 업데이트
-      updatePreview();
-    });
-  </script>
 </body>
 </html>
